@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background-image: linear-gradient(to bottom, rgb(234, 2, 255), rgb(68, 0, 255));
+  background-size: 100% 100%;
+ 
+}
+
+.wf {
+color: rgb(255, 255, 255);
+font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+outline-color: rgb(255, 0, 242);
+outline-style: solid;
+outline-offset: 2px;
+text-align: center;
+text-shadow: 2px;
+animation: fadeIn 1s ease-in;
+}
+@keyframes fadeIn {
+0% {
+  opacity: 0;
+}
+100% {
+  opacity: 1;
+}
+
+}
+.Jus {
+color: aliceblue;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+align-self: center;
+text-align: center;
+animation: fadeIn 10s ease-in;
+justify-content: center;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+position: absolute;
+}
+.arch {
+position: absolute;
+top: 94%;
+left: 1%;
+
+}
+.arch img{
+
+  width: 3%;
+  height: 6%;
+
+}
+
+.arch h1 {
+color: white;
+font-size: 50%;
+
+}

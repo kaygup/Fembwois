@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Courier New", monospace;
+            background-color: #1e1e1e;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #terminal {
+            flex: 1;
+            padding: 20px;
+            border-top: 2px solid #000000;
+            background-color: black;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        #output {
+            flex-grow: 1;
+            font-family: "Press Start 2P", monospace;
+            font-size: 18px;
+            letter-spacing: 1px;
+            overflow-y: auto;
+            white-space: pre-wrap; /* Ensure white space is preserved */
+            word-wrap: break-word; /* Allow lines to break if too long */
+        }
+
+        #inputField {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-family: "Press Start 2P", monospace;
+            font-size: 18px;
+            outline: none;
+            width: 100%;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        #inputField:focus {
+            border: none;
+            outline: none;
+        }
+
+        .command {
+            color: #00ff00;
+        }
+
+        .output {
+            color: #ff6347;
+        }
+
+        .error {
+            color: #ff4500;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="terminal">
+    <div id="output"></div>
+    <input type="text" id="inputField" placeholder="Type a command..." />
+</div>
+
+<script>
+    const inputField = document.getElementById("inputField");
+    const output = document.getElementById("output");
+
+    // ASCII text that you want to display when neofetch is typed
+    const asciiArt = `
+    *********************************************************
+*********************************************************
+*********************************************************
+********@@****************************************#@@****
+******%*..#@************************************#@...@***
+*****@-.....@#********************************%@......@**
+****@-........@*****************************@@........-@*
+***#%..........*@*****@-=#@@%**************@...........@*
+***@.............@#***@.......+@@********@=............*%
+**##..............:@**#@.........-@#***%@...............@
+**@.................@%**@...........@#@.................@
+**@..................:@@+:...........:%.................@
+**@................%+..................:................@
+**@..............#@@%%%%%@@@:...........................@
+**@:...................................................##
+***#...................................................@*
+***@..................................................%#*
+****@............................:+#%%@@@@@@@@.......+@**
+****#@.....:@....@@@@@@:.........@@@@@@-...=........#@***
+******@....-:....@@@@@@..........@@@@@@+....@......@#****
+@@@%#**@...@.....@@@@@@..........@@@@@@-....@....#%=::=@*
+#@.........@.....@@@@@@..........@@@@@@.....@........=@**
+**@........@.....+@@@@-...........%@@@......@.......@****
+***#@*......@.....:@@....@@@......................@#*****
+*****@-.+*+..+...........................#*:#......@*****
+****#%....=................:.....+........-.........@#***
+***%@.................-@@@=..........................%#**
+**@@....+@@.................................@@@@@@@@@****
+************@@*......................-=%@@%**************
+***************@.=%@%#*................@*****************
+****************@+.....................:@****************
+******************@@:...................+%***************
+*****************%@......................@***************
+****************@=..:.....................@**************
+*******************@-.....................*%*************
+******************#%.......................@*************
+******************@........................#*************
+*****************%+.........................@************
+*****************@..........................@************
+*****************%..........................##***********
+****************@:...........................@***********
+****************@............................@***********
+****************@............................@***********
+***************#+............................@***********
+    `;
+
+    // Set focus on the input field automatically when the page loads
+    window.onload = function() {
+        inputField.focus();
+    };
+
+    inputField.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+
+            // Get the input value
+            const command = inputField.value.trim();
+
+            // Print the command in the terminal
+            const commandDiv = document.createElement("div");
+            commandDiv.classList.add("command");
+            commandDiv.textContent = `$ ${command}`;
+            output.appendChild(commandDiv);
+
+            // Handle the command
+            const outputDiv = document.createElement("div");
+
+            if (command === "neofetch") {
+                outputDiv.classList.add("output");
+
+                // Use a <pre> tag to maintain formatting of the ASCII art
+                const preElement = document.createElement("pre");
+                preElement.textContent = asciiArt;  // Display the ASCII art from the string
+                outputDiv.appendChild(preElement);  // Append it to the output div
+            } else if (command === "help") {
+                outputDiv.classList.add("output");
+                outputDiv.textContent = "neofetch, clear, help, arch, debian";  // Print "hiiii" for the help command
+            } 
+            else if (command === "arch") {
+                outputDiv.classList.add("output");
+
+                // Link to the file you want to download (replace this URL with your actual file URL)
+                const downloadUrl = "https://mirror.alwyzon.net/archlinux/iso/2025.02.01/archlinux-2025.02.01-x86_64.iso"; // Replace with your file URL
+                const fileName = "downloaded_file.zip"; // Replace with the desired filename
+
+                // Create a temporary download link and trigger the download
+                const downloadLink = document.createElement("a");
+                downloadLink.href = downloadUrl;
+                downloadLink.download = fileName; // Specify the filename for the download
+                downloadLink.click(); // Trigger the download
+
+                outputDiv.textContent = `Downloading from ${downloadUrl}...`;
+            }
+            else if (command === "debian") {
+                outputDiv.classList.add("output");
+
+                // Link to the file you want to download (replace this URL with your actual file URL)
+                const downloadUrl = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.9.0-amd64-netinst.iso"; // Replace with your file URL
+                const fileName = "downloaded_file.zip"; // Replace with the desired filename
+
+                // Create a temporary download link and trigger the download
+                const downloadLink = document.createElement("a");
+                downloadLink.href = downloadUrl;
+                downloadLink.download = fileName; // Specify the filename for the download
+                downloadLink.click(); // Trigger the download
+
+                outputDiv.textContent = `Downloading from ${downloadUrl}...`;
+            }
+
+            else if (command === "clear") {
+                // Clear the terminal output
+                output.innerHTML = "";  // Clears the output div
+                inputField.value = "";  // Clear the input field
+                return; // Exit the function early to prevent appending "clear" command
+            } else {
+                outputDiv.classList.add("error");
+                outputDiv.textContent = "command not found";
+            }
+
+            output.appendChild(outputDiv);
+
+            // Scroll to the bottom of the output
+            output.scrollTop = output.scrollHeight;
+
+            // Clear the input field
+            inputField.value = "";
+        }
+    });
+</script>
+
+</body>
+</html>
