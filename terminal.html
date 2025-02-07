@@ -79,7 +79,7 @@
 
 <div id="terminal">
     <div id="output"></div>
-    <input type="text" id="inputField" placeholder="Type a command..." />
+    <input type="text" id="inputField" placeholder="Type help for help" />
 </div>
 
 <script>
@@ -164,7 +164,7 @@
                 outputDiv.appendChild(preElement);  // Append it to the output div
             } else if (command === "help") {
                 outputDiv.classList.add("output");
-                outputDiv.textContent = "neofetch, clear, help, arch, debian";  // Print "hiiii" for the help command
+                outputDiv.textContent = "neofetch, clear, help, arch, debian";
             } 
             else if (command === "arch") {
                 outputDiv.classList.add("output");
